@@ -49,6 +49,9 @@
             <button @click="copyMusic(index)">
               {{ $t("message.copy") }}
             </button>
+            <button @click="deleteMusic(index)">
+              {{ $t("message.delete") }}
+            </button>
             <button class="drag-handle">{{ $t("message.drag") }}</button>
           </div>
         </template>
@@ -198,6 +201,16 @@ const copyMusic = (index) => {
   musicList.value.splice(index + 1, 0, copiedMusic); // 插入到原始项的后面
 };
 
+const deleteMusic = (index) => {
+  const music = musicList.value[index];
+  if (music.id === currentMusicId.value) {
+    audioPlayer.value.pause();
+    audioPlayer.value.src = "";
+    currentMusicId.value = null;
+  }
+  musicList.value.splice(index, 1);
+};
+
 const onDragStart = () => {
   isDragging.value = true;
 };
@@ -209,7 +222,7 @@ const onDragEnd = () => {
 
 <style scoped>
 .music-player {
-  max-width: 600px;
+  max-width: 660px;
   margin: 0 auto;
   padding: 0 20px;
 }
