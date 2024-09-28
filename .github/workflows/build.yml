@@ -25,19 +25,31 @@ jobs:
         run: npm install
 
       # - name: Build application
-
       #   run: npm run build
+
+      - name: Set up code signing
+        run: |
+          echo "${{ secrets.CERTIFICATE_P12 }}" | base64 --decode > certificate.p12
+          security create-keychain -p actions temp.keychain
+          security import certificate.p12 -k temp.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
+          security list-keychains -s temp.keychain
+          security unlock-keychain -p actions temp.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k actions temp.keychain
+        env:
+          CERTIFICATE_P12: ${{ secrets.CERTIFICATE_P12 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
 
       - name: Package application
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build:win
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: release
-          path: release
+      - name: List release directory
+        run: ls -al release
+
+      - name: Find generated DMG file
+        id: find_dmg
+        run: echo "DMG_FILE=$(find release -name '*.dmg' | head -n 1)" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -56,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release/0.0.0/YourAppName-Mac-0.0.0-Installer.dmg
-          asset_name: YourAppName-Mac-0.0.0-Installer.dmg
+          asset_path: ${{ env.DMG_FILE }}
+          asset_name: ${{ env.DMG_FILE }}
           asset_content_type: application/octet-stream
