@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build Electron App
 
 on:
   push:
@@ -10,29 +10,29 @@ on:
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-
-    runs-on: ${{ matrix.os }}
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "14"
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build application
+      - name: Build the Electron app
         run: npm run build
 
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v2
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: dist
+          name: electron-app-${{ matrix.os }}
+          path: dist/
