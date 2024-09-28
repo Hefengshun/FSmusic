@@ -35,3 +35,24 @@ jobs:
         with:
           name: release
           path: release
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_FSMUSIC_TOKEN }}
+        with:
+          tag_name: v0.0.0
+          release_name: Release v0.0.0
+          draft: true
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_FSMUSIC_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/0.0.0/YourAppName-Mac-0.0.0-Installer.dmg
+          asset_name: YourAppName-Mac-0.0.0-Installer.dmg
+          asset_content_type: application/octet-stream
