@@ -1,5 +1,5 @@
 # 目前没用到 打包分别使用macOS、Windows
-# name: Build Electron App
+name: Build Electron App
 
 # on:
 #   push:
@@ -9,31 +9,31 @@
 #     branches:
 #       - master
 
-# jobs:
-#   build:
-#     runs-on: ${{ matrix.os }}
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
 
-#     strategy:
-#       matrix:
-#         os: [macos-latest, ubuntu-latest, windows-latest]
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: "18"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-#       - name: Install dependencies
-#         run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#       - name: Build the Electron app
-#         run: npm run build
+      - name: Build the Electron app
+        run: npm run build
 
-#       - name: Upload Artifacts
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: electron-app-${{ matrix.os }}
-#           path: dist/
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: electron-app-${{ matrix.os }}
+          path: dist/

@@ -2,8 +2,8 @@
   "name": "fsmusic",
   "private": true,
   "version": "0.0.0",
-  "description": "Your application description",
-  "author": "Your Name <your.email@example.com>",
+  "description": "一款上传自己音乐支持排序播放的软件",
+  "author": "何风顺 <he1551819739@163.com>",
   "type": "module",
   "scripts": {
     "dev": "vite",
