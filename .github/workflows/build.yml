@@ -30,7 +30,7 @@ jobs:
       - name: Package application
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:win
+        run: npm run build:mac
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
