@@ -28,13 +28,20 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 
 let win: BrowserWindow | null;
 
+const isDev = process.env.NODE_ENV === "development";
+
 function createWindow() {
   win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+    icon: path.join(process.env.VITE_PUBLIC, "icon.icns"),
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs"),
     },
   });
+
+  if (isDev) {
+    // 仅在开发环境中打开开发者工具
+    win.webContents.openDevTools();
+  }
 
   // Test active push message to Renderer-process.
   win.webContents.on("did-finish-load", () => {

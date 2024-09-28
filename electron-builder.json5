@@ -11,7 +11,9 @@
   files: ["dist", "dist-electron"],
   mac: {
     target: ["dmg"],
-    artifactName: "${productName}-Mac-${version}-Installer.${ext}",
+    // artifactName: "${productName}-Mac-${version}-Installer.${ext}",
+    artifactName: "${productName}.${ext}",
+    icon: "dist/icon.icns", // 指定 macOS 图标路径
   },
   win: {
     target: [
