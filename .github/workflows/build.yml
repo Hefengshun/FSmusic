@@ -22,16 +22,16 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Build application
-        run: pnpm run build
+        run: npm run build
 
       - name: Package application
-        run: pnpm run build:mac
+        run: npm run build:mac
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: release
           path: release
