@@ -28,7 +28,9 @@ jobs:
         run: npm run build
 
       - name: Package application
-        run: npm run build:mac
+        run: |
+          export GH_TOKEN=${{ secrets.GH_FSMUSIC_TOKEN }}
+          npm run build:mac
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
