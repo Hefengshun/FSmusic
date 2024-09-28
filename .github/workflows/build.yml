@@ -10,7 +10,11 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -24,19 +28,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Build application
-      #   run: npm run build
+      - name: Build application
+        run: npm run build
 
       - name: Package application
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run build:win
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            npm run build:mac
+          elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            npm run build:win
+          else
+            npm run build:linux
+          fi
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: release
-          path: release
+      - name: List release directory
+        run: ls -al release
+
+      - name: Verify generated files
+        run: |
+          echo "Generated files:"
+          find release -type f
+
+      - name: Find generated installer
+        id: find_installer
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            echo "INSTALLER_FILE=$(find release -name '*-Mac-*.dmg' | head -n 1)" >> $GITHUB_ENV
+          elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            echo "INSTALLER_FILE=$(find release -name '*-Windows-*.exe' | head -n 1)" >> $GITHUB_ENV
+          else
+            echo "INSTALLER_FILE=$(find release -name '*-Linux-*.AppImage' | head -n 1)" >> $GITHUB_ENV
+          fi
 
       - name: Create Release
         id: create_release
@@ -55,6 +79,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release/0.0.0/YourAppName-Mac-0.0.0-Installer.dmg
-          asset_name: YourAppName-Mac-0.0.0-Installer.dmg
+          asset_path: ${{ env.INSTALLER_FILE }}
+          asset_name: ${{ env.INSTALLER_FILE }}
           asset_content_type: application/octet-stream
