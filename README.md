@@ -79,4 +79,4 @@ pnpm build:mac
 
 ## macOS 系统安装包
 
-[HFmusic.dmg](https://github.com/Hefengshun/FSmusic/release/HFmusic.dmg)
+[HFmusic.dmg 点击下载](https://github.com/Hefengshun/FSmusic/raw/refs/heads/master/release/HFmusic.dmg?download=)
