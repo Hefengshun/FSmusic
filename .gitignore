@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-electron
-release
+release/mac-arm64
 dist-ssr
 *.local
 
