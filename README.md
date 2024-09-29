@@ -39,7 +39,7 @@ pnpm dev
 
 ```bash
 #目前只做了mac打包，其他打包方式请自行修改
-yarn build:mac
+pnpm build:mac
 ```
 
 ## 打包后目录结构
@@ -50,13 +50,19 @@ yarn build:mac
 │   │   ├── ....
 │   │   └── ....
 │   ├── ....
-│   ├── HFmusic.dmg #mac安装包
+│   ├── HFmusic.dmg # mac安装包 拉取到本地后，双击HFmusic.dmg即可安装
 │   ├── ....
 ```
 
 ## 项目截图
 
 ## 项目截图
+
+<div class="inline-images">
+  <img src="./public/imageOne.jpg" alt="imageOne">
+  <img src="./public/imageTwo.jpg" alt="imageTwo">
+  <img src="./public/imageThree.png" alt="imageThree">
+</div>
 
 <style>
    .inline-images{
@@ -71,8 +77,6 @@ yarn build:mac
   }
 </style>
 
-<div class="inline-images">
-  <img src="./public/imageOne.jpg" alt="imageOne">
-  <img src="./public/imageTwo.jpg" alt="imageTwo">
-  <img src="./public/imageThree.png" alt="imageThree">
-</div>
+## macOS 系统安装包
+
+[HFmusic.dmg](https://github.com/Hefengshun/FSmusic/release/HFmusic.dmg)
