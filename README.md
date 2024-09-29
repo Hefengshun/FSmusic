@@ -54,28 +54,11 @@ pnpm build:mac
 │   ├── ....
 ```
 
-## 项目截图
+## 项目截图（样式跟随系统）
 
-## 项目截图
+| ![imageOne](./public/imageOne.jpg) | ![imageTwo](./public/imageTwo.jpg) | ![imageThree](./public/imageThree.png) |
+|:----------------------------------:|:----------------------------------:|:--------------------------------------:|
 
-<div class="inline-images">
-  <img src="./public/imageOne.jpg" alt="imageOne">
-  <img src="./public/imageTwo.jpg" alt="imageTwo">
-  <img src="./public/imageThree.png" alt="imageThree">
-</div>
-
-<style>
-   .inline-images{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-   }
-  .inline-images img {
-    width: 265px;
-    height: 200px;
-    display: inline-block;
-  }
-</style>
 
 ## macOS 系统安装包
 
